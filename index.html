@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Cálculo de Margem</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0d6efd">
+</head>
+
+<body>
+  <div class="container py-4">
+    <a href="menu.html" class="btn-voltar">
+      <i class="fa-solid fa-arrow-left"></i>
+    </a>
+  </div>
+  <div class="container my-4">
+    <div class="card shadow-sm">
+      <div class="card-header bg-dark text-white text-center">
+        <h5 class="mb-0">Cálculo de Margem</h5>
+        <small>Retirar ICMS para produtos com ST</small>
+      </div>
+
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-12 col-md-4">
+            <label class="form-label">ICMS Venda (%)</label>
+            <input type="number" id="icms" class="form-control" value="12">
+          </div>
+          <div class="col-12 col-md-4">
+            <label class="form-label">Custo Líquido</label>
+            <input type="number" id="custo" class="form-control">
+          </div>
+          <div class="col-12 col-md-4">
+            <label class="form-label">Preço Tabela</label>
+            <input type="number" id="preco" class="form-control">
+          </div>
+        </div>
+
+        <div class="mt-4 d-grid d-md-flex gap-2">
+          <button class="btn btn-primary flex-fill" onclick="calcular()">Calcular</button>
+          <button class="btn btn-outline-secondary flex-fill" onclick="limpar()">Limpar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-responsive mt-4">
+      <table class="table table-bordered table-hover align-middle text-center">
+        <thead class="table-light">
+          <tr>
+            <th>Desc.</th>
+            <th>Venda</th>
+            <th>S/ Imp.</th>
+            <th>Lucro</th>
+            <th>Margem</th>
+          </tr>
+        </thead>
+        <tbody id="resultado"></tbody>
+      </table>
+    </div>
+  </div>
+  <!-- Modal Instalar PWA -->
+  <div class="modal fade" id="installModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Instalar aplicativo</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          Quer instalar o <b>Cálculo de Margem</b> no seu celular/PC para usar offline?
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-outline-secondary" data-bs-dismiss="modal">
+            Agora não
+          </button>
+          <button class="btn btn-primary" id="btnInstallPWA">
+            Instalar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.min.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("./sw.js");
+    }
+  </script>
+
+</body>
+
+</html>
