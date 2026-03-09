@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Cotação de Produtos</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" href="favicon.ico" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+        <link rel="manifest" href="manifest.json">
+        <meta name="theme-color" content="#0d6efd">
+    </head>
+
+<body>
+    <div class="container py-4">
+        <a href="menu.html" class="btn-voltar">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+    </div>
+    <div class="container my-4">
+        <div class="card shadow">
+            <div class="card-header bg-dark text-white">
+                Cotação de Importação
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label>FOB</label>
+                        <input type="number" id="fob" class="form-control input-amarelo">
+                    </div>
+                    <div class="col-md-4">
+                        <label>CBM caixa</label>
+                        <input type="number" id="cbmCaixa" class="form-control input-amarelo">
+                    </div>
+                    <div class="col-md-4">
+                        <label>Peças por caixa</label>
+                        <input type="number" id="pecasCaixa" class="form-control input-amarelo">
+                    </div>
+                    <div class="col-md-4">
+                        <label>Porto</label>
+                        <select id="porto" class="form-select">
+                            <option value="China 20" data-preco="3000" data-cbm="27" data-peso="24000">China 20</option>
+                            <option value="China 40" data-preco="3500" data-cbm="60" data-peso="28000">China 40</option>
+                            <option value="China NOR" data-preco="3000" data-cbm="55" data-peso="24000">China NOR
+                            </option>
+                            <option value="China 40HC" data-preco="5000" data-cbm="69" data-peso="28000">China 40HC
+                            </option>
+                            <option value="Montevideu" data-preco="3500" data-cbm="69" data-peso="28000">Montevideu
+                            </option>
+                            <option value="vietnam/india 20" data-preco="3000" data-cbm="27" data-peso="24000">
+                                vietnam/india 20</option>
+                            <option value="vietnam/india 40" data-preco="3000" data-cbm="60" data-peso="28000">
+                                vietnam/india 40</option>
+                            <option value="vietnam/india 40 HC" data-preco="10000" data-cbm="69" data-peso="28000">
+                                vietnam/india 40 HC</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label>NCM</label>
+                        <select id="ncm" class="form-select">
+                            <option value="9405.20.00" data-ii="18" data-ipi="15" data-margem="40">Abajurs</option>
+                            <option value="4420.9000" data-ii="14" data-ipi="0" data-margem="35">Baús</option>
+                            <option value="4202.9200" data-ii="35" data-ipi="10" data-margem="35">Bolsa/sacola toucador
+                                de plástico</option>
+                            <option value="95" data-ii="20" data-ipi="10" data-margem="35">Brinquedos</option>
+                            <option value="9406" data-ii="18" data-ipi="0" data-margem="35">Camping</option>
+                            <option value="4016.9100" data-ii="16" data-ipi="10" data-margem="35">Capachos emborrachados
+                            </option>
+                            <option value="6912.0000" data-ii="20" data-ipi="10" data-margem="35">Cerâmica</option>
+                            <option value="4602.1100" data-ii="12" data-ipi="0" data-margem="40">Cestas/cap</option>
+                            <option value="3924.9000" data-ii="18" data-ipi="10" data-margem="35">Plasticos</option>
+                            <option value="8205.9000" data-ii="18" data-ipi="8" data-margem="35">Ferramentas</option>
+                            <option value="6601.9110" data-ii="20" data-ipi="0" data-margem="35">Guarda-chuva</option>
+                            <option value="7323.93.00" data-ii="18" data-ipi="10" data-margem="35">Inox / Vidro</option>
+                            <option value="4202.1220" data-ii="20" data-ipi="10" data-margem="35">Mala</option>
+                            <option value="9403.60.00" data-ii="18" data-ipi="10" data-margem="35">Móveis de madeira
+                            </option>
+                            <option value="6911.1090" data-ii="20" data-ipi="15" data-margem="35">Porcelanas</option>
+                            <option value="5701.9000" data-ii="35" data-ipi="10" data-margem="35">Tapetes India</option>
+                            <option value="6304.92.00" data-ii="35" data-ipi="0" data-margem="35">Textil</option>
+                            <option value="8302.4900" data-ii="16" data-ipi="10" data-margem="35">Varão p/ cortina de
+                                box</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label>USD frete</label>
+                        <input type="number" id="frete" class="form-control input-amarelo" value="">
+                    </div>
+                    <div class="col-md-3">
+                        <label>II</label>
+                        <input type="number" id="ii" class="form-control input-verde" value="25">
+                    </div>
+                    <div class="col-md-3">
+                        <label>IPI</label>
+                        <input type="number" id="ipi" class="form-control input-verde" value="7">
+                    </div>
+                    <div class="col-md-3">
+                        <label>% agente</label>
+                        <input type="number" id="agente" class="form-control input-verde" value="5">
+                    </div>
+                    <div class="col-md-3">
+                        <label>Margem</label>
+                        <input type="number" id="margem" class="form-control input-verde" value="27">
+                    </div>
+                    <div class="col-md-3">
+                        <label>Subst. Tributária</label>
+                        <input type="number" id="st" class="form-control input-verde" placeholder="">
+                    </div>
+                    <div class="col-md-3">
+                        <label>USD despacho</label>
+                        <input type="number" step="0.01" id="usdDespacho" class="form-control input-verde" value="6.10">
+                    </div>
+                    <div class="col-md-3">
+                        <label>USD 30%</label>
+                        <input type="number" step="0.01" id="usd30" class="form-control input-verde" value="6.10">
+                    </div>
+                    <div class="col-md-3">
+                        <label>USD 70%</label>
+                        <input type="number" step="0.01" id="usd70" class="form-control input-verde" value="6.10">
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <button onclick="calcular()" class="btn btn-primary w-100">
+                        Calcular Cotação
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="card shadow mt-4">
+            <div class="card-header">
+                Resultado
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <tbody id="resultado">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+ <script>
+function valorNumero(id, padrao = 0) {
+    const el = document.getElementById(id);
+    if (!el) return padrao;
+    const txt = String(el.value ?? "").trim().replace(",", ".");
+    const num = parseFloat(txt);
+    return Number.isFinite(num) ? num : padrao;
+}
+
+function formatarNumeroBR(valor, casas = 2) {
+    if (valor === null || valor === undefined || isNaN(valor)) return "";
+    return Number(valor).toLocaleString("pt-BR", {
+        minimumFractionDigits: casas,
+        maximumFractionDigits: casas
+    });
+}
+
+function calcular() {
+    const resultado = document.getElementById("resultado");
+    if (!resultado) return;
+
+    const fob = valorNumero("fob");
+    const cbmCaixa = valorNumero("cbmCaixa");
+    const pecasCaixa = valorNumero("pecasCaixa");
+    const usdFrete = valorNumero("frete");
+
+    const ii = valorNumero("ii") / 100;
+    const ipi = valorNumero("ipi") / 100;
+    const agente = valorNumero("agente") / 100;
+    const margem = valorNumero("margem") / 100;
+
+    const usdDespacho = valorNumero("usdDespacho", 6.10);
+    const usd30 = valorNumero("usd30", usdDespacho);
+    const usd70 = valorNumero("usd70", usdDespacho);
+
+    const stCampo = document.getElementById("st");
+    const stTexto = String(stCampo?.value ?? "").trim().replace(",", ".");
+    const st = stTexto === "" ? null : (parseFloat(stTexto) / 100);
+
+    const porto = document.getElementById("porto");
+    const portoSel = porto?.options[porto.selectedIndex];
+    const cbmContainer = parseFloat(portoSel?.dataset?.cbm || "0");
+
+    if (!fob || !cbmCaixa || !pecasCaixa || !cbmContainer) {
+        resultado.innerHTML = `
+            <tr>
+                <td colspan="2" class="text-danger text-center">
+                    Preencha FOB, CBM caixa, peças por caixa e porto.
+                </td>
+            </tr>
+        `;
+        return;
+    }
+
+    // Constantes da planilha
+    const pis = 0.0165;
+    const cofins = 0.0760;
+    const icmsImportacao = 0.18;
+    const icmsVenda = 0.12;
+    const cpmf = 0.0038;
+
+    const armazenagemPct = 0.0041;
+    const desembaraco = 1500;
+    const adicionalCofinsPct = 0.015;
+    const thcBL = 800;
+    const desova = 600;
+    const desconsolidacao = 120;
+    const afrmmPct = 0.25;
+    const emissaoDI = 214.5;
+    const transporteInterno = 4500;
+    const tagsEtiquetas = 37;
+
+    const pagamento = "DP"; // igual à planilha
+    const taxaFrete = usdDespacho * 1.10;
+
+    // 1) Quantidade
+    const quantidadeCaixas = cbmContainer / cbmCaixa;
+    const pecasContainer = quantidadeCaixas * pecasCaixa;
+
+    // 2) Em moeda estrangeira
+    const produtoFOBUSD = pecasContainer * fob;
+    const freteInternacionalUSD = usdFrete;
+    const seguroInternacionalUSD = 0;
+    const cifUSD = produtoFOBUSD + freteInternacionalUSD + seguroInternacionalUSD;
+
+    // 3) Em moeda nacional
+    const produtoFOBBRL = (produtoFOBUSD * 0.30 * usd30) + (produtoFOBUSD * 0.70 * usd70);
+    const freteInternacionalBRL = freteInternacionalUSD * taxaFrete;
+    const seguroInternacionalBRL = seguroInternacionalUSD * taxaFrete;
+    const cifBRL = produtoFOBBRL + freteInternacionalBRL + seguroInternacionalBRL;
+
+    // 4) Custos e tributos no destino
+    const valorII = cifBRL * ii;
+    const valorIPIImport = (cifBRL + valorII) * ipi;
+
+    const basePisCofins =
+        cifBRL * (1 + (icmsImportacao * (ii + ipi * (1 + ii)))) /
+        ((1 - pis - cofins) * (1 - icmsImportacao));
+
+    const valorPIS = pis * basePisCofins;
+    const valorCOFINS = cofins * basePisCofins;
+
+    const fechamentoCambio = pagamento === "CC" ? 0 : 250;
+    const cartaCredito = pagamento === "DP" ? 0 : (300 * usdDespacho);
+
+    const valorArmazenagem = armazenagemPct * cifBRL;
+    const valorAdicionalCofins = adicionalCofinsPct * basePisCofins;
+    const valorAFRMM = afrmmPct * freteInternacionalBRL;
+
+    const subtotalDespacho =
+        valorArmazenagem +
+        desembaraco +
+        valorAdicionalCofins +
+        thcBL +
+        desova +
+        desconsolidacao +
+        valorAFRMM +
+        emissaoDI;
+
+    const valorICMSImport =
+        ((cifBRL + valorII + valorIPIImport + valorPIS + valorCOFINS + subtotalDespacho) / 0.7375) *
+        icmsImportacao;
+
+    const subtotalDestino =
+        valorII +
+        valorIPIImport +
+        valorPIS +
+        valorCOFINS +
+        fechamentoCambio +
+        cartaCredito +
+        subtotalDespacho +
+        valorICMSImport +
+        transporteInterno +
+        tagsEtiquetas;
+
+    // 5) Custo total
+    const custoTotal = cifBRL + subtotalDestino;
+
+    // 6) Valor a ser utilizado no cálculo
+    let valorUsadoCalculo;
+    let icmsVendaFormula;
+
+    if (st === null) {
+        valorUsadoCalculo = custoTotal - valorICMSImport - valorIPIImport - valorPIS - valorCOFINS;
+        icmsVendaFormula = icmsVenda;
+    } else {
+        const baseCalculoST = custoTotal * (1 + st);
+        const icmsRecolherST = baseCalculoST * 0.17;
+        valorUsadoCalculo = custoTotal + icmsRecolherST - valorICMSImport - valorCOFINS - valorPIS - valorIPIImport;
+        icmsVendaFormula = 0;
+    }
+
+    // 7) Custo venda cliente
+    const coeficiente = (100 - ((icmsVendaFormula + cofins + pis + cpmf + margem) * 100)) / 100;
+    const custoVendaCliente = valorUsadoCalculo / coeficiente;
+
+    const valorICMSVenda = icmsVendaFormula ? (custoVendaCliente * icmsVendaFormula) : 0;
+    const valorCofinsVenda = custoVendaCliente * cofins;
+    const valorPisVenda = custoVendaCliente * pis;
+    const valorIPIVenda = custoVendaCliente * ipi;
+    const lucroBrutoGZT = custoVendaCliente * margem;
+    const valorCPMFVenda = custoVendaCliente * cpmf;
+    const comissaoAgente = ((cifBRL * agente) * 1.0925) + ((cifBRL * agente) * 0.25);
+    const valorDesconto = custoVendaCliente * 0.30;
+
+    const subtotalVenda =
+        valorICMSVenda +
+        valorCofinsVenda +
+        valorPisVenda +
+        valorIPIVenda +
+        lucroBrutoGZT +
+        valorCPMFVenda +
+        comissaoAgente +
+        valorDesconto;
+
+    // 8) Custos e lucros totais
+    const custoTotalVendaSemIPI = subtotalVenda - valorIPIVenda + valorUsadoCalculo;
+    const custoTotalVendaComIPI = valorUsadoCalculo + subtotalVenda;
+
+    const precoVenda = custoTotalVendaSemIPI / pecasContainer;
+    const precoVendaIPI = custoTotalVendaComIPI / pecasContainer;
+    const custoUnitario = valorUsadoCalculo / pecasContainer;
+
+    // 9) Resumo final
+    const fobCTNR = pecasContainer * fob;
+
+    let margemGzt15;
+    let margemGzt29;
+
+    const precoGrazziotin25 = precoVenda * 0.75;
+
+    if (st === null) {
+        margemGzt15 =
+            ((((precoVenda * 0.85) - ((precoVenda * 0.85) * (0.0925 + icmsVenda))) - custoUnitario) /
+            (((precoVenda * 0.85) - ((precoVenda * 0.85) * (0.0925 + icmsVenda))))) * 100;
+
+        margemGzt29 =
+            (((((precoGrazziotin25 * 0.96) - ((precoGrazziotin25 * 0.96) * (0.0925 + icmsVenda))) - custoUnitario) /
+            (((precoGrazziotin25 * 0.96) - ((precoGrazziotin25 * 0.96) * (0.0925 + icmsVenda))))) * 100);
+    } else {
+        margemGzt15 =
+            ((((precoVenda * 0.85) - ((precoVenda * 0.85) * 0.0925)) - custoUnitario) /
+            (((precoVenda * 0.85) - ((precoVenda * 0.85) * 0.0925)))) * 100;
+
+        margemGzt29 =
+            (((((precoGrazziotin25 * 0.96) - ((precoGrazziotin25 * 0.96) * 0.0925)) - custoUnitario) /
+            (((precoGrazziotin25 * 0.96) - ((precoGrazziotin25 * 0.96) * 0.0925)))) * 100);
+    }
+
+    const multipleGzt = precoVenda / fob;
+    const multipleGrz = precoGrazziotin25 / fob;
+
+    resultado.innerHTML = `
+        <tr><td>Peças por container</td><td>${formatarNumeroBR(pecasContainer, 0)}</td></tr>
+        <tr><td>Preço venda</td><td>${formatarNumeroBR(precoVenda, 2)}</td></tr>
+        <tr><td>Preço venda c/ IPI</td><td>${formatarNumeroBR(precoVendaIPI, 2)}</td></tr>
+        <tr><td>FOB CTNR</td><td>${formatarNumeroBR(fobCTNR, 2)}</td></tr>
+        <tr><td>Custo unitário</td><td>${formatarNumeroBR(custoUnitario, 2)}</td></tr>
+        <tr><td>Margem GZT -15%</td><td>${formatarNumeroBR(margemGzt15, 2)}</td></tr>
+        <tr><td>multiple gzt</td><td>${formatarNumeroBR(multipleGzt, 1)}</td></tr>
+        <tr><td>R$ grazziotin -25%</td><td>${formatarNumeroBR(precoGrazziotin25, 2)}</td></tr>
+        <tr><td>margem GZT -29%</td><td>${formatarNumeroBR(margemGzt29, 2)}</td></tr>
+        <tr><td>multiple grz</td><td>${formatarNumeroBR(multipleGrz, 1)}</td></tr>
+    `;
+}
+</script>
+</body>
+
+</html>

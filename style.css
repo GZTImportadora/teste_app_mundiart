@@ -1,32 +1,40 @@
-body{
-  background:#f4f6f9;
+body {
+  background: #f4f6f9;
 }
 
-table{
-  font-size:0.9rem;
+table {
+  font-size: 0.9rem;
 }
 
-.btn-voltar{
-position:fixed;
-top:20px;
-left:20px;
-width:42px;
-height:42px;
-border-radius:10px;
-background:#ffffff;
-display:flex;
-align-items:center;
-justify-content:center;
-box-shadow:0 4px 10px rgba(0,0,0,0.15);
-color:#333;
-text-decoration:none;
-font-size:18px;
-transition:all 0.2s ease;
-z-index:999;
+.btn-voltar {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  color: #333;
+  text-decoration: none;
+  font-size: 18px;
+  transition: all 0.2s ease;
+  z-index: 999;
 }
 
-.btn-voltar:hover{
-background:#0d6efd;
-color:#fff;
-transform:translateY(-2px);
+.btn-voltar:hover {
+  background: #0d6efd;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.input-amarelo {
+  background: #fff3cd;
+}
+
+.input-verde {
+  background: #d1e7dd;
 }

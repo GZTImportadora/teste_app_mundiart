@@ -1,10 +1,17 @@
-const CACHE_NAME = "calculomargem-v1";
+const CACHE_NAME = "calculomargem-v2";
 
 const FILES_TO_CACHE = [
   "./",
-  "./index.html",
+  "./login.html",
+  "./menu.html",
+  "./margem.html",
+  "./cotacao.html",
   "./style.css",
+  "./login.css",
+  "./menu.css",
   "./script.js",
+  "./js/auth.js",
+  "./js/app.js",
   "./favicon.ico",
   "./icon-192.png",
   "./icon-512.png",

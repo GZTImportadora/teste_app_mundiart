@@ -2,48 +2,61 @@
 <html lang="pt-br">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Cálculo de Margem</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="favicon.ico" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="menu.css">
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#0d6efd">
+  <meta charset="UTF-8">
+  <title>App Mundiart - Menu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="menu.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0d6efd">
 </head>
 
 <body>
-
     <div class="header">
         <i class="fa fa-th-large"></i> Menu Principal
     </div>
-
     <div class="tiles">
-
         <div class="tile tile-margem" onclick="abrirMargem()">
             <i class="fa-solid fa-chart-line"></i>
             Cálculo de Margem
         </div>
-
         <div class="tile tile-cotacao" onclick="abrirCotacao()">
             <i class="fa-solid fa-file-invoice-dollar"></i>
             Cotação de Produtos
         </div>
-
         <div class="tile tile-sair" onclick="logout()">
             <i class="fa-solid fa-right-from-bracket"></i>
             Sair
         </div>
-
     </div>
-
+    <!-- Modal Instalar PWA -->
+    <div class="modal fade" id="installModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Instalar aplicativo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    Quer instalar o <b>App Mundiart</b> no seu celular/PC para usar offline?
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        Agora não
+                    </button>
+                    <button class="btn btn-primary" id="btnInstallPWA">
+                        Instalar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="footer">
         Sistema interno • Uso restrito
     </div>
-
     <script>
-
         function abrirMargem() {
             window.location.href = "margem.html";
         }
@@ -59,8 +72,14 @@
             window.location.href = "login.html";
 
         }
-
     </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.min.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("./sw.js");
+    }
+  </script>
 
 </body>
 
