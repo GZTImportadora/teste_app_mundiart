@@ -10,6 +10,7 @@ const FILES_TO_CACHE = [
   "./login.css",
   "./menu.css",
   "./script.js",
+  "./cotacao.js",
   "./js/auth.js",
   "./js/app.js",
   "./favicon.ico",
