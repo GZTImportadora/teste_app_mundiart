@@ -15,6 +15,20 @@ function formatarNumeroBR(valor, casas = 2) {
     });
 }
 
+function lerPercentual(id) {
+    const el = document.getElementById(id);
+    let valor = String(el?.value ?? "").trim();
+
+    if (valor === "") return null;
+
+    valor = valor.replace("%", "").replace(",", ".");
+
+    const numero = parseFloat(valor);
+    if (!Number.isFinite(numero)) return null;
+
+    return numero / 100;
+}
+
 function calcular() {
     const resultado = document.getElementById("resultado");
     if (!resultado) return;
@@ -33,9 +47,7 @@ function calcular() {
     const usd30 = valorNumero("usd30", usdDespacho);
     const usd70 = valorNumero("usd70", usdDespacho);
 
-    const stCampo = document.getElementById("st");
-    const stTexto = String(stCampo?.value ?? "").trim().replace(",", ".");
-    const st = stTexto === "" ? null : (parseFloat(stTexto) / 100);
+    const st = lerPercentual("st");
 
     const porto = document.getElementById("porto");
     const portoSel = porto?.options[porto.selectedIndex];
@@ -182,19 +194,19 @@ function calcular() {
     if (st === null) {
         margemGzt15 =
             ((((precoVenda * 0.85) - ((precoVenda * 0.85) * (0.0925 + icmsVenda))) - custoUnitario) /
-            (((precoVenda * 0.85) - ((precoVenda * 0.85) * (0.0925 + icmsVenda))))) * 100;
+                (((precoVenda * 0.85) - ((precoVenda * 0.85) * (0.0925 + icmsVenda))))) * 100;
 
         margemGzt29 =
             (((((precoGrazziotin25 * 0.96) - ((precoGrazziotin25 * 0.96) * (0.0925 + icmsVenda))) - custoUnitario) /
-            (((precoGrazziotin25 * 0.96) - ((precoGrazziotin25 * 0.96) * (0.0925 + icmsVenda))))) * 100);
+                (((precoGrazziotin25 * 0.96) - ((precoGrazziotin25 * 0.96) * (0.0925 + icmsVenda))))) * 100);
     } else {
         margemGzt15 =
             ((((precoVenda * 0.85) - ((precoVenda * 0.85) * 0.0925)) - custoUnitario) /
-            (((precoVenda * 0.85) - ((precoVenda * 0.85) * 0.0925)))) * 100;
+                (((precoVenda * 0.85) - ((precoVenda * 0.85) * 0.0925)))) * 100;
 
         margemGzt29 =
             (((((precoGrazziotin25 * 0.96) - ((precoGrazziotin25 * 0.96) * 0.0925)) - custoUnitario) /
-            (((precoGrazziotin25 * 0.96) - ((precoGrazziotin25 * 0.96) * 0.0925)))) * 100);
+                (((precoGrazziotin25 * 0.96) - ((precoGrazziotin25 * 0.96) * 0.0925)))) * 100);
     }
 
     const multipleGzt = precoVenda / fob;
