@@ -104,6 +104,7 @@ function abrirParametros() {
 }
 
 function salvarParametros() {
+
     PARAMS.pis = parseFloat(document.getElementById("p_pis").value) || 0;
     PARAMS.cofins = parseFloat(document.getElementById("p_cofins").value) || 0;
     PARAMS.icmsImportacao = parseFloat(document.getElementById("p_icmsImportacao").value) || 0;
@@ -132,7 +133,12 @@ function salvarParametros() {
     };
 
     localStorage.setItem("parametros", JSON.stringify(PARAMS));
+
     aplicarParametrosNaTela();
+
+    const modalEl = document.getElementById("modalParametros");
+    const modal = bootstrap.Modal.getInstance(modalEl);
+    modal.hide();
 }
 
 function calcular() {
