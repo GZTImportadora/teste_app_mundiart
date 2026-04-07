@@ -1,3 +1,4 @@
+let PARAMS = {};
 
 function valorNumero(id, padrao = 0) {
     const el = document.getElementById(id);
@@ -18,15 +19,95 @@ function formatarNumeroBR(valor, casas = 2) {
 function lerPercentual(id) {
     const el = document.getElementById(id);
     let valor = String(el?.value ?? "").trim();
-
     if (valor === "") return null;
-
     valor = valor.replace("%", "").replace(",", ".");
-
     const numero = parseFloat(valor);
-    if (!Number.isFinite(numero)) return null;
+    return Number.isFinite(numero) ? numero / 100 : null;
+}
 
-    return numero / 100;
+async function carregarParametros() {
+    try {
+        const local = localStorage.getItem("parametros");
+
+        if (local) {
+            PARAMS = JSON.parse(local);
+        } else {
+            const res = await fetch("parametros.json");
+            PARAMS = await res.json();
+        }
+
+        if (!PARAMS.defaults) {
+            const res = await fetch("parametros.json");
+            const original = await res.json();
+            PARAMS.defaults = original.defaults;
+        }
+
+    } catch (e) {
+        PARAMS = {};
+    }
+}
+
+function aplicarParametrosNaTela() {
+    if (!PARAMS.defaults) return;
+
+    document.getElementById("ii").value = PARAMS.defaults.ii ?? 0;
+    document.getElementById("ipi").value = PARAMS.defaults.ipi ?? 0;
+    document.getElementById("agente").value = PARAMS.defaults.agente ?? 0;
+    document.getElementById("margem").value = PARAMS.defaults.margem ?? 0;
+
+    document.getElementById("usdDespacho").value = PARAMS.defaults.usdDespacho ?? 0;
+    document.getElementById("usd30").value = PARAMS.defaults.usd30 ?? 0;
+    document.getElementById("usd70").value = PARAMS.defaults.usd70 ?? 0;
+}
+
+function abrirParametros() {
+    document.getElementById("p_pis").value = PARAMS.pis ?? 0;
+    document.getElementById("p_cofins").value = PARAMS.cofins ?? 0;
+    document.getElementById("p_icmsImportacao").value = PARAMS.icmsImportacao ?? 0;
+    document.getElementById("p_icmsVenda").value = PARAMS.icmsVenda ?? 0;
+    document.getElementById("p_cpmf").value = PARAMS.cpmf ?? 0;
+
+    document.getElementById("p_armazenagemPct").value = PARAMS.armazenagemPct ?? 0;
+    document.getElementById("p_desembaraco").value = PARAMS.desembaraco ?? 0;
+    document.getElementById("p_afrmmPct").value = PARAMS.afrmmPct ?? 0;
+    document.getElementById("p_transporteInterno").value = PARAMS.transporteInterno ?? 0;
+
+    document.getElementById("p_thcBL").value = PARAMS.thcBL ?? 0;
+    document.getElementById("p_desova").value = PARAMS.desova ?? 0;
+    document.getElementById("p_desconsolidacao").value = PARAMS.desconsolidacao ?? 0;
+    document.getElementById("p_emissaoDI").value = PARAMS.emissaoDI ?? 0;
+    document.getElementById("p_tagsEtiquetas").value = PARAMS.tagsEtiquetas ?? 0;
+
+    new bootstrap.Modal(document.getElementById("modalParametros")).show();
+}
+
+function salvarParametros() {
+
+    const defaults = PARAMS.defaults || {};
+
+    PARAMS = {
+        ...PARAMS,
+        defaults
+    };
+
+    PARAMS.pis = parseFloat(document.getElementById("p_pis").value) || 0;
+    PARAMS.cofins = parseFloat(document.getElementById("p_cofins").value) || 0;
+    PARAMS.icmsImportacao = parseFloat(document.getElementById("p_icmsImportacao").value) || 0;
+    PARAMS.icmsVenda = parseFloat(document.getElementById("p_icmsVenda").value) || 0;
+    PARAMS.cpmf = parseFloat(document.getElementById("p_cpmf").value) || 0;
+
+    PARAMS.armazenagemPct = parseFloat(document.getElementById("p_armazenagemPct").value) || 0;
+    PARAMS.desembaraco = parseFloat(document.getElementById("p_desembaraco").value) || 0;
+    PARAMS.afrmmPct = parseFloat(document.getElementById("p_afrmmPct").value) || 0;
+    PARAMS.transporteInterno = parseFloat(document.getElementById("p_transporteInterno").value) || 0;
+
+    PARAMS.thcBL = parseFloat(document.getElementById("p_thcBL").value) || 0;
+    PARAMS.desova = parseFloat(document.getElementById("p_desova").value) || 0;
+    PARAMS.desconsolidacao = parseFloat(document.getElementById("p_desconsolidacao").value) || 0;
+    PARAMS.emissaoDI = parseFloat(document.getElementById("p_emissaoDI").value) || 0;
+    PARAMS.tagsEtiquetas = parseFloat(document.getElementById("p_tagsEtiquetas").value) || 0;
+
+    localStorage.setItem("parametros", JSON.stringify(PARAMS));
 }
 
 function calcular() {
@@ -54,54 +135,43 @@ function calcular() {
     const cbmContainer = parseFloat(portoSel?.dataset?.cbm || "0");
 
     if (!fob || !cbmCaixa || !pecasCaixa || !cbmContainer) {
-        resultado.innerHTML = `
-            <tr>
-                <td colspan="2" class="text-danger text-center">
-                    Preencha FOB, CBM caixa, peças por caixa e porto.
-                </td>
-            </tr>
-        `;
+        resultado.innerHTML = `<tr><td colspan="2" class="text-danger text-center">Preencha FOB, CBM caixa, peças por caixa e porto.</td></tr>`;
         return;
     }
 
-    // Constantes da planilha
-    const pis = 0.0165;
-    const cofins = 0.0760;
-    const icmsImportacao = 0.18;
-    const icmsVenda = 0.12;
-    const cpmf = 0.0038;
+    const pis = PARAMS.pis ?? 0;
+    const cofins = PARAMS.cofins ?? 0;
+    const icmsImportacao = PARAMS.icmsImportacao ?? 0;
+    const icmsVenda = PARAMS.icmsVenda ?? 0;
+    const cpmf = PARAMS.cpmf ?? 0;
 
-    const armazenagemPct = 0.0041;
-    const desembaraco = 1500;
-    const adicionalCofinsPct = 0.015;
-    const thcBL = 800;
-    const desova = 600;
-    const desconsolidacao = 120;
-    const afrmmPct = 0.25;
-    const emissaoDI = 214.5;
-    const transporteInterno = 4500;
-    const tagsEtiquetas = 37;
+    const armazenagemPct = PARAMS.armazenagemPct ?? 0;
+    const desembaraco = PARAMS.desembaraco ?? 0;
+    const adicionalCofinsPct = PARAMS.adicionalCofinsPct ?? 0;
+    const thcBL = PARAMS.thcBL ?? 0;
+    const desova = PARAMS.desova ?? 0;
+    const desconsolidacao = PARAMS.desconsolidacao ?? 0;
+    const afrmmPct = PARAMS.afrmmPct ?? 0;
+    const emissaoDI = PARAMS.emissaoDI ?? 0;
+    const transporteInterno = PARAMS.transporteInterno ?? 0;
+    const tagsEtiquetas = PARAMS.tagsEtiquetas ?? 0;
 
-    const pagamento = "DP"; // igual à planilha
+    const pagamento = "DP";
     const taxaFrete = usdDespacho * 1.10;
 
-    // 1) Quantidade
     const quantidadeCaixas = cbmContainer / cbmCaixa;
     const pecasContainer = quantidadeCaixas * pecasCaixa;
 
-    // 2) Em moeda estrangeira
     const produtoFOBUSD = pecasContainer * fob;
     const freteInternacionalUSD = usdFrete;
     const seguroInternacionalUSD = 0;
     const cifUSD = produtoFOBUSD + freteInternacionalUSD + seguroInternacionalUSD;
 
-    // 3) Em moeda nacional
     const produtoFOBBRL = (produtoFOBUSD * 0.30 * usd30) + (produtoFOBUSD * 0.70 * usd70);
     const freteInternacionalBRL = freteInternacionalUSD * taxaFrete;
     const seguroInternacionalBRL = seguroInternacionalUSD * taxaFrete;
     const cifBRL = produtoFOBBRL + freteInternacionalBRL + seguroInternacionalBRL;
 
-    // 4) Custos e tributos no destino
     const valorII = cifBRL * ii;
     const valorIPIImport = (cifBRL + valorII) * ipi;
 
@@ -144,7 +214,9 @@ function calcular() {
         valorICMSImport +
         transporteInterno +
         tagsEtiquetas;
+
     const custoTotal = cifBRL + subtotalDestino;
+
     let valorUsadoCalculo;
     let icmsVendaFormula;
 
@@ -157,71 +229,23 @@ function calcular() {
         valorUsadoCalculo = custoTotal + icmsRecolherST - valorICMSImport - valorCOFINS - valorPIS - valorIPIImport;
         icmsVendaFormula = 0;
     }
+
     const coeficiente = (100 - ((icmsVendaFormula + cofins + pis + cpmf + margem) * 100)) / 100;
     const custoVendaCliente = valorUsadoCalculo / coeficiente;
 
-    const valorICMSVenda = icmsVendaFormula ? (custoVendaCliente * icmsVendaFormula) : 0;
-    const valorCofinsVenda = custoVendaCliente * cofins;
-    const valorPisVenda = custoVendaCliente * pis;
-    const valorIPIVenda = custoVendaCliente * ipi;
-    const lucroBrutoGZT = custoVendaCliente * margem;
-    const valorCPMFVenda = custoVendaCliente * cpmf;
-    const comissaoAgente = ((cifBRL * agente) * 1.0925) + ((cifBRL * agente) * 0.25);
-    const valorDesconto = custoVendaCliente * 0.30;
-
-    const subtotalVenda =
-        valorICMSVenda +
-        valorCofinsVenda +
-        valorPisVenda +
-        valorIPIVenda +
-        lucroBrutoGZT +
-        valorCPMFVenda +
-        comissaoAgente +
-        valorDesconto;
-    const custoTotalVendaSemIPI = subtotalVenda - valorIPIVenda + valorUsadoCalculo;
-    const custoTotalVendaComIPI = valorUsadoCalculo + subtotalVenda;
-
-    const precoVenda = custoTotalVendaSemIPI / pecasContainer;
-    const precoVendaIPI = custoTotalVendaComIPI / pecasContainer;
+    const precoVenda = custoVendaCliente / pecasContainer;
     const custoUnitario = valorUsadoCalculo / pecasContainer;
-    const fobCTNR = pecasContainer * fob;
-
-    let margemGzt15;
-    let margemGzt29;
-
-    const precoGrazziotin25 = precoVenda * 0.75;
-
-    if (st === null) {
-        margemGzt15 =
-            ((((precoVenda * 0.85) - ((precoVenda * 0.85) * (0.0925 + icmsVenda))) - custoUnitario) /
-                (((precoVenda * 0.85) - ((precoVenda * 0.85) * (0.0925 + icmsVenda))))) * 100;
-
-        margemGzt29 =
-            (((((precoGrazziotin25 * 0.96) - ((precoGrazziotin25 * 0.96) * (0.0925 + icmsVenda))) - custoUnitario) /
-                (((precoGrazziotin25 * 0.96) - ((precoGrazziotin25 * 0.96) * (0.0925 + icmsVenda))))) * 100);
-    } else {
-        margemGzt15 =
-            ((((precoVenda * 0.85) - ((precoVenda * 0.85) * 0.0925)) - custoUnitario) /
-                (((precoVenda * 0.85) - ((precoVenda * 0.85) * 0.0925)))) * 100;
-
-        margemGzt29 =
-            (((((precoGrazziotin25 * 0.96) - ((precoGrazziotin25 * 0.96) * 0.0925)) - custoUnitario) /
-                (((precoGrazziotin25 * 0.96) - ((precoGrazziotin25 * 0.96) * 0.0925)))) * 100);
-    }
-
-    const multipleGzt = precoVenda / fob;
-    const multipleGrz = precoGrazziotin25 / fob;
 
     resultado.innerHTML = `
         <tr><td>Peças por container</td><td>${formatarNumeroBR(pecasContainer, 0)}</td></tr>
         <tr><td>Preço venda</td><td>${formatarNumeroBR(precoVenda, 2)}</td></tr>
-        <tr><td>Preço venda c/ IPI</td><td>${formatarNumeroBR(precoVendaIPI, 2)}</td></tr>
-        <tr><td>FOB CTNR</td><td>${formatarNumeroBR(fobCTNR, 2)}</td></tr>
         <tr><td>Custo unitário</td><td>${formatarNumeroBR(custoUnitario, 2)}</td></tr>
-        <tr><td>Margem GZT -15%</td><td>${formatarNumeroBR(margemGzt15, 2)}</td></tr>
-        <tr><td>multiple gzt</td><td>${formatarNumeroBR(multipleGzt, 1)}</td></tr>
-        <tr><td>R$ grazziotin -25%</td><td>${formatarNumeroBR(precoGrazziotin25, 2)}</td></tr>
-        <tr><td>margem GZT -29%</td><td>${formatarNumeroBR(margemGzt29, 2)}</td></tr>
-        <tr><td>multiple grz</td><td>${formatarNumeroBR(multipleGrz, 1)}</td></tr>
     `;
 }
+
+async function init() {
+    await carregarParametros();
+    aplicarParametrosNaTela();
+}
+
+document.addEventListener("DOMContentLoaded", init);

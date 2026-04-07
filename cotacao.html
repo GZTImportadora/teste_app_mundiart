@@ -1,149 +1,225 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
-
-    <head>
-        <meta charset="UTF-8">
-        <title>Cotação de Produtos</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="shortcut icon" href="favicon.ico" />
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="style.css">
-        <link rel="manifest" href="manifest.json">
-        <meta name="theme-color" content="#0d6efd">
-    </head>
+    <meta charset="UTF-8">
+    <title>Cotação de Produtos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
 
 <body>
-    <div class="container py-4">
-        <a href="menu.html" class="btn-voltar">
-            <i class="fa-solid fa-arrow-left"></i>
-        </a>
-    </div>
-    <div class="container my-4">
-        <div class="card shadow">
-            <div class="card-header bg-dark text-white">
-                Cotação de Importação
+
+<div class="container py-4">
+    <a href="menu.html" class="btn-voltar">
+        <i class="fa-solid fa-arrow-left"></i>
+    </a>
+</div>
+
+<div class="container my-4">
+
+    <div class="card shadow">
+        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+            Cotação de Importação
+            <i class="fa fa-gear" style="cursor:pointer;" onclick="abrirParametros()"></i>
+        </div>
+
+        <div class="card-body">
+            <div class="row g-3">
+
+                <div class="col-md-4">
+                    <label>Custo USD</label>
+                    <input type="number" id="fob" class="form-control input-amarelo">
+                </div>
+
+                <div class="col-md-4">
+                    <label>CBM caixa</label>
+                    <input type="number" id="cbmCaixa" class="form-control input-amarelo">
+                </div>
+
+                <div class="col-md-4">
+                    <label>Peças por caixa</label>
+                    <input type="number" id="pecasCaixa" class="form-control input-amarelo">
+                </div>
+
+                <div class="col-md-4">
+                    <label>Porto</label>
+                    <select id="porto" class="form-select">
+                        <option value="China 20" data-cbm="27">China 20</option>
+                        <option value="China 40" data-cbm="60">China 40</option>
+                        <option value="China NOR" data-cbm="55">China NOR</option>
+                        <option value="China 40HC" data-cbm="69">China 40HC</option>
+                        <option value="Montevideu" data-cbm="69">Montevideu</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <label>USD frete</label>
+                    <input type="number" id="frete" class="form-control input-amarelo">
+                </div>
+
+                <div class="col-md-3">
+                    <label>II</label>
+                    <input type="number" id="ii" class="form-control input-verde">
+                </div>
+
+                <div class="col-md-3">
+                    <label>IPI</label>
+                    <input type="number" id="ipi" class="form-control input-verde">
+                </div>
+
+                <div class="col-md-3">
+                    <label>% agente</label>
+                    <input type="number" id="agente" class="form-control input-verde">
+                </div>
+
+                <div class="col-md-3">
+                    <label>Margem</label>
+                    <input type="number" id="margem" class="form-control input-verde">
+                </div>
+
+                <div class="col-md-3">
+                    <label>Subst. Tributária</label>
+                    <input type="text" id="st" class="form-control input-verde" placeholder="Ex: 2 ou 2%">
+                </div>
+
+                <div class="col-md-3">
+                    <label>USD despacho</label>
+                    <input type="number" step="0.01" id="usdDespacho" class="form-control input-verde">
+                </div>
+
+                <div class="col-md-3">
+                    <label>USD 30%</label>
+                    <input type="number" step="0.01" id="usd30" class="form-control input-verde">
+                </div>
+
+                <div class="col-md-3">
+                    <label>USD 70%</label>
+                    <input type="number" step="0.01" id="usd70" class="form-control input-verde">
+                </div>
+
             </div>
-            <div class="card-body">
+
+            <div class="mt-4">
+                <button onclick="calcular()" class="btn btn-primary w-100">
+                    Calcular Cotação
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow mt-4">
+        <div class="card-header">
+            Resultado
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <tbody id="resultado"></tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal fade" id="modalParametros" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Parâmetros</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+
                 <div class="row g-3">
-                    <div class="col-md-4">
-                        <label>FOB</label>
-                        <input type="number" id="fob" class="form-control input-amarelo">
-                    </div>
-                    <div class="col-md-4">
-                        <label>CBM caixa</label>
-                        <input type="number" id="cbmCaixa" class="form-control input-amarelo">
-                    </div>
-                    <div class="col-md-4">
-                        <label>Peças por caixa</label>
-                        <input type="number" id="pecasCaixa" class="form-control input-amarelo">
-                    </div>
-                    <div class="col-md-4">
-                        <label>Porto</label>
-                        <select id="porto" class="form-select">
-                            <option value="China 20" data-preco="3000" data-cbm="27" data-peso="24000">China 20</option>
-                            <option value="China 40" data-preco="3500" data-cbm="60" data-peso="28000">China 40</option>
-                            <option value="China NOR" data-preco="3000" data-cbm="55" data-peso="24000">China NOR
-                            </option>
-                            <option value="China 40HC" data-preco="5000" data-cbm="69" data-peso="28000">China 40HC
-                            </option>
-                            <option value="Montevideu" data-preco="3500" data-cbm="69" data-peso="28000">Montevideu
-                            </option>
-                            <option value="vietnam/india 20" data-preco="3000" data-cbm="27" data-peso="24000">
-                                vietnam/india 20</option>
-                            <option value="vietnam/india 40" data-preco="3000" data-cbm="60" data-peso="28000">
-                                vietnam/india 40</option>
-                            <option value="vietnam/india 40 HC" data-preco="10000" data-cbm="69" data-peso="28000">
-                                vietnam/india 40 HC</option>
-                        </select>
-                    </div>
-                    <div class="col-md-4">
-                        <label>NCM</label>
-                        <select id="ncm" class="form-select">
-                            <option value="9405.20.00" data-ii="18" data-ipi="15" data-margem="40">Abajurs</option>
-                            <option value="4420.9000" data-ii="14" data-ipi="0" data-margem="35">Baús</option>
-                            <option value="4202.9200" data-ii="35" data-ipi="10" data-margem="35">Bolsa/sacola toucador
-                                de plástico</option>
-                            <option value="95" data-ii="20" data-ipi="10" data-margem="35">Brinquedos</option>
-                            <option value="9406" data-ii="18" data-ipi="0" data-margem="35">Camping</option>
-                            <option value="4016.9100" data-ii="16" data-ipi="10" data-margem="35">Capachos emborrachados
-                            </option>
-                            <option value="6912.0000" data-ii="20" data-ipi="10" data-margem="35">Cerâmica</option>
-                            <option value="4602.1100" data-ii="12" data-ipi="0" data-margem="40">Cestas/cap</option>
-                            <option value="3924.9000" data-ii="18" data-ipi="10" data-margem="35">Plasticos</option>
-                            <option value="8205.9000" data-ii="18" data-ipi="8" data-margem="35">Ferramentas</option>
-                            <option value="6601.9110" data-ii="20" data-ipi="0" data-margem="35">Guarda-chuva</option>
-                            <option value="7323.93.00" data-ii="18" data-ipi="10" data-margem="35">Inox / Vidro</option>
-                            <option value="4202.1220" data-ii="20" data-ipi="10" data-margem="35">Mala</option>
-                            <option value="9403.60.00" data-ii="18" data-ipi="10" data-margem="35">Móveis de madeira
-                            </option>
-                            <option value="6911.1090" data-ii="20" data-ipi="15" data-margem="35">Porcelanas</option>
-                            <option value="5701.9000" data-ii="35" data-ipi="10" data-margem="35">Tapetes India</option>
-                            <option value="6304.92.00" data-ii="35" data-ipi="0" data-margem="35">Textil</option>
-                            <option value="8302.4900" data-ii="16" data-ipi="10" data-margem="35">Varão p/ cortina de
-                                box</option>
-                        </select>
-                    </div>
-                    <div class="col-md-4">
-                        <label>USD frete</label>
-                        <input type="number" id="frete" class="form-control input-amarelo" value="">
-                    </div>
+
                     <div class="col-md-3">
-                        <label>II</label>
-                        <input type="number" id="ii" class="form-control input-verde" value="25">
+                        <label>PIS</label>
+                        <input type="number" step="0.0001" id="p_pis" class="form-control">
                     </div>
+
                     <div class="col-md-3">
-                        <label>IPI</label>
-                        <input type="number" id="ipi" class="form-control input-verde" value="7">
+                        <label>COFINS</label>
+                        <input type="number" step="0.0001" id="p_cofins" class="form-control">
                     </div>
+
                     <div class="col-md-3">
-                        <label>% agente</label>
-                        <input type="number" id="agente" class="form-control input-verde" value="5">
+                        <label>ICMS Importação</label>
+                        <input type="number" step="0.01" id="p_icmsImportacao" class="form-control">
                     </div>
+
                     <div class="col-md-3">
-                        <label>Margem</label>
-                        <input type="number" id="margem" class="form-control input-verde" value="27">
+                        <label>ICMS Venda</label>
+                        <input type="number" step="0.01" id="p_icmsVenda" class="form-control">
                     </div>
+
                     <div class="col-md-3">
-                        <label>Subst. Tributária</label>
-                        <input type="text" id="st" class="form-control input-verde" placeholder="Ex: 2 ou 2%">
+                        <label>CPMF</label>
+                        <input type="number" step="0.0001" id="p_cpmf" class="form-control">
                     </div>
+
                     <div class="col-md-3">
-                        <label>USD despacho</label>
-                        <input type="number" step="0.01" id="usdDespacho" class="form-control input-verde" value="6.10">
+                        <label>Armazenagem %</label>
+                        <input type="number" step="0.0001" id="p_armazenagemPct" class="form-control">
                     </div>
+
                     <div class="col-md-3">
-                        <label>USD 30%</label>
-                        <input type="number" step="0.01" id="usd30" class="form-control input-verde" value="6.10">
+                        <label>Desembaraço</label>
+                        <input type="number" id="p_desembaraco" class="form-control">
                     </div>
+
                     <div class="col-md-3">
-                        <label>USD 70%</label>
-                        <input type="number" step="0.01" id="usd70" class="form-control input-verde" value="6.10">
+                        <label>AFRMM %</label>
+                        <input type="number" step="0.01" id="p_afrmmPct" class="form-control">
                     </div>
+
+                    <div class="col-md-3">
+                        <label>Transporte Interno</label>
+                        <input type="number" id="p_transporteInterno" class="form-control">
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>THC BL</label>
+                        <input type="number" id="p_thcBL" class="form-control">
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>Desova</label>
+                        <input type="number" id="p_desova" class="form-control">
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>Desconsolidação</label>
+                        <input type="number" id="p_desconsolidacao" class="form-control">
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>Emissão DI</label>
+                        <input type="number" id="p_emissaoDI" class="form-control">
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>Tags/Etiquetas</label>
+                        <input type="number" id="p_tagsEtiquetas" class="form-control">
+                    </div>
+
                 </div>
-                <div class="mt-4">
-                    <button onclick="calcular()" class="btn btn-primary w-100">
-                        Calcular Cotação
-                    </button>
-                </div>
+
             </div>
-        </div>
-        <div class="card shadow mt-4">
-            <div class="card-header">
-                Resultado
+
+            <div class="modal-footer">
+                <button class="btn btn-success" onclick="salvarParametros()">Salvar</button>
             </div>
-            <div class="card-body">
-                <table class="table table-bordered">
-                    <tbody id="resultado">
-                    </tbody>
-                </table>
-            </div>
+
         </div>
     </div>
-    <script src="cotacao.js" defer></script>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="cotacao.js"></script>
+
 </body>
-
-
 </html>

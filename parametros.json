@@ -1,0 +1,28 @@
+{
+  "pis": 0.0165,
+  "cofins": 0.076,
+  "icmsImportacao": 0.18,
+  "icmsVenda": 0.12,
+  "cpmf": 0.0038,
+
+  "armazenagemPct": 0.0041,
+  "desembaraco": 1500,
+  "adicionalCofinsPct": 0.015,
+  "thcBL": 800,
+  "desova": 600,
+  "desconsolidacao": 120,
+  "afrmmPct": 0.25,
+  "emissaoDI": 214.5,
+  "transporteInterno": 4500,
+  "tagsEtiquetas": 37,
+
+  "defaults": {
+    "ii": 25,
+    "ipi": 7,
+    "agente": 5,
+    "margem": 27,
+    "usdDespacho": 6.10,
+    "usd30": 6.10,
+    "usd70": 6.10
+  }
+}
