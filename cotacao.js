@@ -232,25 +232,46 @@ function calcular() {
     const precoVendaIPI = precoVenda * (1 + ipi);
     const fobCTNR = pecasContainer * fob;
 
+    let margemGzt15;
+    let margemGzt29;
+
     const precoGrazziotin25 = precoVenda * 0.75;
 
-    const margemGzt15 = 15;
-    const margemGzt29 = 29;
+    if (st === null) {
+        margemGzt15 =
+            ((((precoVenda * 0.85) - ((precoVenda * 0.85) * (0.0925 + icmsVenda))) - custoUnitario) /
+                (((precoVenda * 0.85) - ((precoVenda * 0.85) * (0.0925 + icmsVenda))))) * 100;
+
+        margemGzt29 =
+            ((((precoGrazziotin25 * 0.96) - ((precoGrazziotin25 * 0.96) * (0.0925 + icmsVenda))) - custoUnitario) /
+                (((precoGrazziotin25 * 0.96) - ((precoGrazziotin25 * 0.96) * (0.0925 + icmsVenda))))) * 100;
+    } else {
+        margemGzt15 =
+            ((((precoVenda * 0.85) - ((precoVenda * 0.85) * 0.0925)) - custoUnitario) /
+                (((precoVenda * 0.85) - ((precoVenda * 0.85) * 0.0925)))) * 100;
+
+        margemGzt29 =
+            ((((precoGrazziotin25 * 0.96) - ((precoGrazziotin25 * 0.96) * 0.0925)) - custoUnitario) /
+                (((precoGrazziotin25 * 0.96) - ((precoGrazziotin25 * 0.96) * 0.0925)))) * 100;
+    }
 
     const multipleGzt = precoVenda / fob;
     const multipleGrz = precoGrazziotin25 / fob;
 
     resultado.innerHTML = `
         <tr><td>Peças por container</td><td>${formatarNumeroBR(pecasContainer, 0)}</td></tr>
-        <tr><b><td>Custo unitário</td><td>R$ ${formatarNumeroBR(custoUnitario, 2)}</td></b></tr>
+        <tr>
+            <td><strong>Custo unitário</strong></td>
+            <td><strong>R$ ${formatarNumeroBR(custoUnitario, 2)}</strong></td>
+        </tr>
         <tr><td>Preço venda</td><td>R$ ${formatarNumeroBR(precoVenda, 2)}</td></tr>
-        <tr><td>Preço venda c/ IPI</td><td>${formatarNumeroBR(precoVendaIPI, 2)}</td></tr>
+        <tr><td>Preço Venda Grazziotin -25%</td><td>R$ ${formatarNumeroBR(precoGrazziotin25, 2)}</td></tr>
+        <tr><td>Preço venda c/ IPI</td><td>R$ ${formatarNumeroBR(precoVendaIPI, 2)}</td></tr>
         <tr><td>Custo CTNR</td><td>USD ${formatarNumeroBR(fobCTNR, 2)}</td></tr>
         <tr><td>Margem -15%</td><td>${formatarNumeroBR(margemGzt15, 2)} %</td></tr>
-        <tr><td>Multiple GZT</td><td>${formatarNumeroBR(multipleGzt, 1)}</td></tr>
-        <tr><td>Custo Grazziotin -25%</td><td>R$ ${formatarNumeroBR(precoGrazziotin25, 2)}</td></tr>
         <tr><td>Margem -29%</td><td>${formatarNumeroBR(margemGzt29, 2)} %</td></tr>
-        <tr><td>Multiple GRZ</td><td>${formatarNumeroBR(multipleGrz, 1)}</td></tr>
+        <tr><td>Multiple Mundiart</td><td>${formatarNumeroBR(multipleGzt, 1)}</td></tr>
+        <tr><td>Multiple Grazziotin</td><td>${formatarNumeroBR(multipleGrz, 1)}</td></tr>
     `;
 }
 
