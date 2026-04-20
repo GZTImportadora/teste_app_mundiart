@@ -38,6 +38,12 @@ function formatarNumeroBR(valor, casas = 2) {
     });
 }
 
+function formatarInteiro(valor) {
+    return Math.round(valor).toLocaleString("pt-BR", {
+        maximumFractionDigits: 0
+    });
+}
+
 function lerPercentual(id) {
     const el = document.getElementById(id);
     let valor = String(el?.value ?? "").trim();
@@ -512,7 +518,7 @@ function calcular() {
     const fobCTNR = produtoFOBUSD;
 
     resultado.innerHTML = `
-        <tr><td>Peças por container</td><td>${formatarNumeroBR(pecasContainer, 0)}</td></tr>
+        <tr><td>Peças por container</td><td>${formatarInteiro(pecasContainer)}</td></tr>
         <tr>
             <td><strong>Custo unitário</strong></td>
             <td><strong>R$ ${formatarNumeroBR(custoUnitarioFinal, 2)}</strong></td>
@@ -584,20 +590,20 @@ function abrirDetalhamento() {
         <p>
             Peças = (CBM container ÷ CBM caixa) × peças por caixa<br>
             Peças = (${formatarNumeroBR(d.cbmContainer, 2)} ÷ ${formatarNumeroBR(d.cbmCaixa, 4)}) × ${formatarNumeroBR(d.pecasCaixa, 0)}<br>
-            <strong>= ${formatarNumeroBR(d.pecasContainer, 2)}</strong>
+            <strong>= ${formatarInteiro(d.pecasContainer)}</strong>
         </p>
 
         <h6 class="mt-4 mb-3">Custo unitário</h6>
         <p>
             Custo unitário = custo total ÷ peças<br>
-            Custo unitário = ${formatarNumeroBR(d.custoTotalAjustado, 2)} ÷ ${formatarNumeroBR(d.pecasContainer, 2)}<br>
+            Custo unitário = ${formatarNumeroBR(d.custoTotalAjustado, 2)} ÷ ${formatarInteiro(d.pecasContainer)}<br>
             <strong>= ${formatarNumeroBR(d.custoUnitarioFinal, 2)}</strong>
         </p>
 
         <h6 class="mt-4 mb-3">Preço venda</h6>
         <p>
             Preço = custo venda cliente ÷ peças<br>
-            Preço = ${formatarNumeroBR(d.custoVendaCliente, 2)} ÷ ${formatarNumeroBR(d.pecasContainer, 2)}<br>
+            Preço = ${formatarNumeroBR(d.custoVendaCliente, 2)} ÷ ${formatarInteiro(d.pecasContainer)}<br>
             <strong>= ${formatarNumeroBR(d.precoVenda, 2)}</strong>
         </p>
 
@@ -618,7 +624,7 @@ function abrirDetalhamento() {
         <h6 class="mt-4 mb-3">Custo CTNR</h6>
         <p>
             FOB CTNR = peças × custo USD<br>
-            FOB = ${formatarNumeroBR(d.pecasContainer, 2)} × ${formatarNumeroBR(d.fob, 2)}<br>
+            FOB = ${formatarInteiro(d.pecasContainer)} × ${formatarNumeroBR(d.fob, 2)}<br>
             <strong>= USD ${formatarNumeroBR(d.produtoFOBUSD, 2)}</strong>
         </p>
 
