@@ -1,28 +1,221 @@
 {
-  "pis": 0.0165,
-  "cofins": 0.076,
-  "icmsImportacao": 0.18,
-  "icmsVenda": 0.12,
-  "cpmf": 0.0038,
-
-  "armazenagemPct": 0.0041,
-  "desembaraco": 1500,
-  "adicionalCofinsPct": 0.015,
-  "thcBL": 800,
-  "desova": 600,
-  "desconsolidacao": 120,
-  "afrmmPct": 0.25,
-  "emissaoDI": 214.5,
-  "transporteInterno": 4500,
-  "tagsEtiquetas": 37,
-
-  "defaults": {
+  "tributos": {
+    "pis": {
+      "valor": 0.0165,
+      "descricao": "Alíquota de PIS",
+      "uso": ["base importacao", "venda"],
+      "sensivel": true
+    },
+    "cofins": {
+      "valor": 0.076,
+      "descricao": "Alíquota de Cofins",
+      "uso": ["base importacao", "venda"],
+      "sensivel": true
+    },
+    "icmsImportacao": {
+      "valor": 0.18,
+      "descricao": "ICMS de importação padrão",
+      "uso": ["gross-up importacao"],
+      "sensivel": true
+    },
+    "icmsVenda": {
+      "valor": 0.12,
+      "descricao": "ICMS de venda",
+      "uso": ["formacao de preco"],
+      "sensivel": true
+    },
+    "icmsIntraSt": {
+      "valor": 0.17,
+      "descricao": "ICMS interno para ST",
+      "uso": ["substituicao tributaria"],
+      "sensivel": true
+    },
+    "cpmf": {
+      "valor": 0.0038,
+      "descricao": "Percentual de CPMF usado no modelo",
+      "uso": ["formacao de preco"],
+      "sensivel": true
+    }
+  },
+  "despacho": {
+    "armazenagemPct": {
+      "valor": 0.0041,
+      "descricao": "Armazenagem sobre CIF BRL",
+      "uso": ["subtotal despacho"],
+      "sensivel": true
+    },
+    "desembaraco": {
+      "valor": 1500,
+      "descricao": "Custo fixo de desembaraco",
+      "uso": ["subtotal despacho"],
+      "sensivel": true
+    },
+    "adicionalCofinsPct": {
+      "valor": 0.015,
+      "descricao": "Adicional sobre a base de PIS/Cofins",
+      "uso": ["subtotal despacho"],
+      "sensivel": true
+    },
+    "thcBL": {
+      "valor": 800,
+      "descricao": "Custo THC e BL",
+      "uso": ["subtotal despacho"],
+      "sensivel": true
+    },
+    "desova": {
+      "valor": 600,
+      "descricao": "Custo de desova",
+      "uso": ["subtotal despacho"],
+      "sensivel": true
+    },
+    "desconsolidacao": {
+      "valor": 120,
+      "descricao": "Custo de desconsolidacao",
+      "uso": ["subtotal despacho"],
+      "sensivel": true
+    },
+    "afrmmPct": {
+      "valor": 0.25,
+      "descricao": "Percentual AFRMM sobre frete BRL",
+      "uso": ["subtotal despacho"],
+      "sensivel": true
+    },
+    "emissaoDI": {
+      "valor": 214.5,
+      "descricao": "Custo de emissao DI",
+      "uso": ["subtotal despacho"],
+      "sensivel": true
+    },
+    "transporteInterno": {
+      "valor": 4500,
+      "descricao": "Transporte interno",
+      "uso": ["custo total"],
+      "sensivel": true
+    },
+    "tagsEtiquetas": {
+      "valor": 37,
+      "descricao": "Tags e etiquetas",
+      "uso": ["custo total"],
+      "sensivel": false
+    }
+  },
+  "cambio": {
+    "freteCambioFator": {
+      "valor": 1.1,
+      "descricao": "Multiplicador do cambio aplicado ao frete",
+      "uso": ["frete BRL"],
+      "sensivel": true
+    },
+    "splitCambio30": {
+      "valor": 0.3,
+      "descricao": "Percentual da parcela 30%",
+      "uso": ["FOB BRL"],
+      "sensivel": false
+    },
+    "splitCambio70": {
+      "valor": 0.7,
+      "descricao": "Percentual da parcela 70%",
+      "uso": ["FOB BRL"],
+      "sensivel": false
+    }
+  },
+  "pagamento": {
+    "DP": {
+      "fechamentoCambio": 250,
+      "cartaCredito": 0
+    },
+    "CC": {
+      "fechamentoCambio": 0,
+      "cartaCredito": 300
+    }
+  },
+  "comercial": {
+    "encargoCanalPct": {
+      "valor": 0.0925,
+      "descricao": "Percentual adicional usado nas margens GZT",
+      "uso": ["margem -15", "margem -29"],
+      "sensivel": true
+    },
+    "descontoGrazziotinPct": {
+      "valor": 0.25,
+      "descricao": "Desconto comercial Grazziotin",
+      "uso": ["preco grazziotin"],
+      "sensivel": true
+    },
+    "margemTeste15Fator": {
+      "valor": 0.85,
+      "descricao": "Fator de preco para margem -15",
+      "uso": ["margem -15"],
+      "sensivel": false
+    },
+    "margemTeste29Fator": {
+      "valor": 0.96,
+      "descricao": "Fator de preco para margem -29",
+      "uso": ["margem -29"],
+      "sensivel": false
+    }
+  },
+  "portos": [
+    {
+      "nome": "China 20",
+      "freteUsdPadrao": 3000,
+      "cbm": 27,
+      "peso": 24000
+    },
+    {
+      "nome": "China 40",
+      "freteUsdPadrao": 3500,
+      "cbm": 60,
+      "peso": 28000
+    },
+    {
+      "nome": "China NOR",
+      "freteUsdPadrao": 3000,
+      "cbm": 55,
+      "peso": 24000
+    },
+    {
+      "nome": "China 40HC",
+      "freteUsdPadrao": 5000,
+      "cbm": 69,
+      "peso": 28000
+    },
+    {
+      "nome": "Montevideu",
+      "freteUsdPadrao": 3500,
+      "cbm": 69,
+      "peso": 28000
+    },
+    { 
+      "nome": "vietnam/india 20", 
+      "freteUsdPadrao": 3000, 
+      "cbm": 27, 
+      "peso": 24000 },
+    { 
+      "nome": "vietnam/india 40", 
+      "freteUsdPadrao": 3000, 
+      "cbm": 60, 
+      "peso": 28000 },
+    { 
+      "nome": "vietnam/india 40 HC", 
+      "freteUsdPadrao": 10000, 
+      "cbm": 69,
+      "peso": 28000 }
+  ],
+  "ncmCategorias": {
+    "Inox / Vidro": {
+      "ii": 0.25,
+      "ipi": 0.065,
+      "margemPadrao": 0.27
+    }
+  },
+  "defaultsTela": {
     "ii": 25,
     "ipi": 7,
     "agente": 5,
     "margem": 27,
-    "usdDespacho": 6.10,
-    "usd30": 6.10,
-    "usd70": 6.10
+    "usdDespacho": 6.1,
+    "usd30": 6.1,
+    "usd70": 6.1
   }
 }

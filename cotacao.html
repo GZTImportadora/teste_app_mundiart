@@ -48,11 +48,20 @@
                     <div class="col-md-4">
                         <label>Porto</label>
                         <select id="porto" class="form-select">
-                            <option value="China 40HC" data-cbm="69">China 40HC</option>
-                            <option value="China 20" data-cbm="27">China 20</option>
-                            <option value="China 40" data-cbm="60">China 40</option>
-                            <option value="China NOR" data-cbm="55">China NOR</option>
-                            <option value="Montevideu" data-cbm="69">Montevideu</option>
+                            <option value="China 20" data-cbm="27" data-frete="3000" data-peso="24000">China 20</option>
+                            <option value="China 40" data-cbm="60" data-frete="3500" data-peso="28000">China 40</option>
+                            <option value="China NOR" data-cbm="55" data-frete="3000" data-peso="24000">China NOR
+                            </option>
+                            <option value="China 40HC" data-cbm="69" data-frete="5000" data-peso="28000">China 40HC
+                            </option>
+                            <option value="Montevideu" data-cbm="69" data-frete="3500" data-peso="28000">Montevideu
+                            </option>
+                            <option value="vietnam/india 20" data-cbm="27" data-frete="3000" data-peso="24000">
+                                vietnam/india 20</option>
+                            <option value="vietnam/india 40" data-cbm="60" data-frete="3000" data-peso="28000">
+                                vietnam/india 40</option>
+                            <option value="vietnam/india 40 HC" data-cbm="69" data-frete="10000" data-peso="28000">
+                                vietnam/india 40 HC</option>
                         </select>
                     </div>
 
@@ -60,7 +69,7 @@
                         <label>USD frete</label>
                         <input type="number" id="frete" class="form-control input-amarelo">
                     </div>
-                    
+
                     <hr>
 
                     <div class="col-md-3">
@@ -116,6 +125,8 @@
         <div class="card shadow mt-4">
             <div class="card-header">
                 Resultado
+                <i class="fa-solid fa-circle-info text-primary" style="cursor:pointer;"
+                    onclick="abrirDetalhamento()"></i>
             </div>
             <div class="card-body">
                 <table class="table table-bordered">
@@ -127,7 +138,7 @@
     </div>
 
     <div class="modal fade" id="modalParametros" tabindex="-1">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
 
                 <div class="modal-header">
@@ -137,8 +148,8 @@
 
                 <div class="modal-body">
 
+                    <h6 class="mb-3">Tributos</h6>
                     <div class="row g-3">
-
                         <div class="col-md-3">
                             <label>PIS</label>
                             <input type="number" step="0.0001" id="p_pis" class="form-control">
@@ -151,19 +162,29 @@
 
                         <div class="col-md-3">
                             <label>ICMS Importação</label>
-                            <input type="number" step="0.01" id="p_icmsImportacao" class="form-control">
+                            <input type="number" step="0.0001" id="p_icmsImportacao" class="form-control">
                         </div>
 
                         <div class="col-md-3">
                             <label>ICMS Venda</label>
-                            <input type="number" step="0.01" id="p_icmsVenda" class="form-control">
+                            <input type="number" step="0.0001" id="p_icmsVenda" class="form-control">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label>ICMS Intra ST</label>
+                            <input type="number" step="0.0001" id="p_icmsIntraSt" class="form-control">
                         </div>
 
                         <div class="col-md-3">
                             <label>CPMF</label>
                             <input type="number" step="0.0001" id="p_cpmf" class="form-control">
                         </div>
+                    </div>
 
+                    <hr>
+
+                    <h6 class="mb-3">Despacho</h6>
+                    <div class="row g-3">
                         <div class="col-md-3">
                             <label>Armazenagem %</label>
                             <input type="number" step="0.0001" id="p_armazenagemPct" class="form-control">
@@ -171,50 +192,124 @@
 
                         <div class="col-md-3">
                             <label>Desembaraço</label>
-                            <input type="number" id="p_desembaraco" class="form-control">
+                            <input type="number" step="0.01" id="p_desembaraco" class="form-control">
                         </div>
 
                         <div class="col-md-3">
-                            <label>AFRMM %</label>
-                            <input type="number" step="0.01" id="p_afrmmPct" class="form-control">
-                        </div>
-
-                        <div class="col-md-3">
-                            <label>Transporte Interno</label>
-                            <input type="number" id="p_transporteInterno" class="form-control">
+                            <label>Adicional Cofins %</label>
+                            <input type="number" step="0.0001" id="p_adicionalCofinsPct" class="form-control">
                         </div>
 
                         <div class="col-md-3">
                             <label>THC BL</label>
-                            <input type="number" id="p_thcBL" class="form-control">
+                            <input type="number" step="0.01" id="p_thcBL" class="form-control">
                         </div>
 
                         <div class="col-md-3">
                             <label>Desova</label>
-                            <input type="number" id="p_desova" class="form-control">
+                            <input type="number" step="0.01" id="p_desova" class="form-control">
                         </div>
 
                         <div class="col-md-3">
                             <label>Desconsolidação</label>
-                            <input type="number" id="p_desconsolidacao" class="form-control">
+                            <input type="number" step="0.01" id="p_desconsolidacao" class="form-control">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label>AFRMM %</label>
+                            <input type="number" step="0.0001" id="p_afrmmPct" class="form-control">
                         </div>
 
                         <div class="col-md-3">
                             <label>Emissão DI</label>
-                            <input type="number" id="p_emissaoDI" class="form-control">
+                            <input type="number" step="0.01" id="p_emissaoDI" class="form-control">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label>Transporte Interno</label>
+                            <input type="number" step="0.01" id="p_transporteInterno" class="form-control">
                         </div>
 
                         <div class="col-md-3">
                             <label>Tags/Etiquetas</label>
-                            <input type="number" id="p_tagsEtiquetas" class="form-control">
+                            <input type="number" step="0.01" id="p_tagsEtiquetas" class="form-control">
                         </div>
-
                     </div>
 
                     <hr>
 
+                    <h6 class="mb-3">Câmbio</h6>
                     <div class="row g-3">
+                        <div class="col-md-3">
+                            <label>Fator câmbio frete</label>
+                            <input type="number" step="0.0001" id="p_freteCambioFator" class="form-control">
+                        </div>
 
+                        <div class="col-md-3">
+                            <label>Split câmbio 30%</label>
+                            <input type="number" step="0.0001" id="p_splitCambio30" class="form-control">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label>Split câmbio 70%</label>
+                            <input type="number" step="0.0001" id="p_splitCambio70" class="form-control">
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <h6 class="mb-3">Pagamento</h6>
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <label>DP Fechamento Câmbio</label>
+                            <input type="number" step="0.01" id="p_dpFechamentoCambio" class="form-control">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label>DP Carta Crédito</label>
+                            <input type="number" step="0.01" id="p_dpCartaCredito" class="form-control">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label>CC Fechamento Câmbio</label>
+                            <input type="number" step="0.01" id="p_ccFechamentoCambio" class="form-control">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label>CC Carta Crédito</label>
+                            <input type="number" step="0.01" id="p_ccCartaCredito" class="form-control">
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <h6 class="mb-3">Comercial</h6>
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <label>Encargo canal %</label>
+                            <input type="number" step="0.0001" id="p_encargoCanalPct" class="form-control">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label>Desconto Grazziotin %</label>
+                            <input type="number" step="0.0001" id="p_descontoGrazziotinPct" class="form-control">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label>Fator margem -15</label>
+                            <input type="number" step="0.0001" id="p_margemTeste15Fator" class="form-control">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label>Fator margem -29</label>
+                            <input type="number" step="0.0001" id="p_margemTeste29Fator" class="form-control">
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <h6 class="mb-3">Padrões de tela</h6>
+                    <div class="row g-3">
                         <div class="col-md-3">
                             <label>II</label>
                             <input type="number" id="p_ii" class="form-control">
@@ -249,7 +344,6 @@
                             <label>USD 70%</label>
                             <input type="number" step="0.01" id="p_usd70" class="form-control">
                         </div>
-
                     </div>
 
                 </div>
@@ -261,7 +355,23 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modalDetalhamento" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
 
+                <div class="modal-header">
+                    <h5 class="modal-title">Detalhamento do Cálculo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div id="detalhamentoConteudo"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="cotacao.js"></script>
 

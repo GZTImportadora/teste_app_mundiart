@@ -1,4 +1,4 @@
-const CACHE_NAME = "mundiart-v5";
+const CACHE_NAME = "mundiart-v6";
 
 const FILES_TO_CACHE = [
   "./",
